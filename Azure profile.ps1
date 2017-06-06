@@ -3,6 +3,7 @@
 # Then copy below lines in the profile file: C:\Users\YOURUSERPROFILE\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
 # Alternatively you can create a shorcut and call the script E.G.
 # C:\Windows\SysWOW64\WindowsPowerShell\v1.0\powershell.exe -NoExit -ExecutionPolicy Bypass -File "C:\Azure_profile.ps1"
+# v1.0
 #---------------------------------------------
 
 #Functions
