@@ -1,9 +1,20 @@
-#pending subcription / VM selection / components selection
+#pending components selection / 
+#pending NSG associated to the VM (sometimes is 1:1 relationship)
 
+#Requires -Module  az.accounts
 
-Write-Host -NoNewline -ForegroundColor Green "Please enter the VM name you would like to remove:"
-$VMName = Read-Host
-$vm = Get-AzVm -Name $VMName
+try {Add-AzAccount}
+Catch {'Error'}
+
+$Subs = Get-AzSubscription | Out-GridView -Title "Select your Subscription" -OutputMode Single
+
+Set-AzContext -SubscriptionObject $Subs
+
+$VM = Get-AzVM | Out-GridView -Title "Select your VM" -OutputMode Single
+
+#Write-Host -NoNewline -ForegroundColor Green "Please enter the VM name you would like to remove:"
+$VMName = $VM.Name
+#$vm = Get-AzVm -Name $VMName
 if ($vm) {
 $RGName=$vm.ResourceGroupName
 Write-Host -ForegroundColor Cyan 'Resource Group Name is identified as-' $RGName
@@ -61,7 +72,7 @@ foreach ($nicUri in $vm.NetworkProfile.NetworkInterfaces.Id) {
     }
 }
 Write-Host -ForegroundColor Cyan 'Removing OS disk and Data Disk(s) used by the VM..'
-Get-AzResource -tag $tags | where{$_.resourcegroupname -eq $RGName}| Remove-AzResource -force | Out-Null
+Get-AzResource -tag $tags | Where-Object{$_.resourcegroupname -eq $RGName}| Remove-AzResource -force | Out-Null
 Write-Host -ForegroundColor Green 'Azure Virtual Machine-' $VMName 'and all the resources associated with the VM were removed sucesfully...'
 }
 else{
