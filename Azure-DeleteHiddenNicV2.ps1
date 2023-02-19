@@ -9,7 +9,7 @@ $hiddenHypVNics = Get-Device -ControlOptions DIGCF_ALLCLASSES |
  
 $hiddenHypVNics | ForEach-Object {
     Write-Verbose "Removing ""@$($_.InstanceId.Replace("`0", ''))"""
-    .\devcon.exe remove """@$($_.InstanceId.Replace("`0", ''))"""
+    devcon.exe remove """@$($_.InstanceId.Replace("`0", ''))"""
 }
 
 
